@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Liste des Candidatures</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .recherche {
+      text-align: center;
+      margin-top: 20px;
+    }
+    .recherche input {
+      padding: 8px;
+      width: 300px;
+      max-width: 80%;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <h1 class="logo">Recrutement IA</h1>
+      <nav class="navigation">
+        <a href="index.html" class="btn">Accueil</a>
+        <a href="recruteur.html" class="btn secondaire">Espace Recruteur</a>
+        <!-- Lien deconnexion injecté dynamiquement si connecté -->
+      </nav>
+    </div>
+  </header>
+
+  <main class="container formulaire-section">
+    <h2>Candidatures Reçues</h2>
+
+    <div class="recherche">
+      <input type="text" id="filtreInput" placeholder="Rechercher par nom ou compétence...">
+    </div>
+
+    <table id="tableCandidats">
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Email</th>
+          <th>Compétences</th>
+          <th>Score</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 Plateforme IA Recrutement — Tous droits réservés</p>
+    </div>
+  </footer>
+
+  <script>
+    const nav = document.querySelector('.navigation');
+    if (localStorage.getItem("estConnecte") === "true") {
+      const lienDeconnexion = document.createElement('a');
+      lienDeconnexion.href = "deconnexion.html";
+      lienDeconnexion.className = "btn secondaire";
+      lienDeconnexion.textContent = "Déconnexion";
+      nav.appendChild(lienDeconnexion);
+    }
+
+    const allCandidatures = [];
+
+    fetch("http://127.0.0.1:5000/candidatures")
+      .then(res => res.json())
+      .then(data => {
+        const tbody = document.querySelector('#tableCandidats tbody');
+        data.forEach(c => {
+          allCandidatures.push(c);
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${c.Nom}</td>
+            <td>${c.Email}</td>
+            <td>${c["Compétences"]}</td>
+            <td>${c.Score}</td>
+            <td>${c.Date}</td>
+          `;
+          tbody.appendChild(row);
+        });
+      })
+      .catch(err => {
+        const tbody = document.querySelector('#tableCandidats tbody');
+        const row = document.createElement('tr');
+        row.innerHTML = `<td colspan="5">Erreur de chargement des candidatures.</td>`;
+        tbody.appendChild(row);
+        console.error(err);
+      });
+
+    document.getElementById("filtreInput").addEventListener("input", function() {
+      const valeur = this.value.toLowerCase();
+      const tbody = document.querySelector('#tableCandidats tbody');
+      tbody.innerHTML = "";
+      const resultats = allCandidatures.filter(c =>
+        c.Nom.toLowerCase().includes(valeur) ||
+        c["Compétences"].toLowerCase().includes(valeur)
+      );
+
+      if (resultats.length === 0) {
+        const row = document.createElement('tr');
+        row.innerHTML = `<td colspan="5">Aucun résultat</td>`;
+        tbody.appendChild(row);
+      } else {
+        resultats.forEach(c => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${c.Nom}</td>
+            <td>${c.Email}</td>
+            <td>${c["Compétences"]}</td>
+            <td>${c.Score}</td>
+            <td>${c.Date}</td>
+          `;
+          tbody.appendChild(row);
+        });
+      }
+    });
+  </script>
+</body>
+</html>

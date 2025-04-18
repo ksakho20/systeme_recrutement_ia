@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Test Inscription & Connexion</title>
+</head>
+<body>
+  <h1>Tester l'inscription</h1>
+  <form id="formInscription">
+    <input type="text" placeholder="Nom" name="nom" required><br>
+    <input type="email" placeholder="Email" name="email" required><br>
+    <input type="text" placeholder="Société" name="societe" required><br>
+    <input type="password" placeholder="Mot de passe" name="motdepasse" required><br>
+    <button type="submit">S'inscrire</button>
+  </form>
+  <div id="resultInscription"></div>
+
+  <h1>Tester la connexion</h1>
+  <form id="formConnexion">
+    <input type="email" placeholder="Email" name="email" required><br>
+    <input type="password" placeholder="Mot de passe" name="motdepasse" required><br>
+    <button type="submit">Se connecter</button>
+  </form>
+  <div id="resultConnexion"></div>
+
+  <script>
+    document.getElementById('formInscription').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const data = {
+        nom: this.nom.value,
+        email: this.email.value,
+        societe: this.societe.value,
+        motdepasse: this.motdepasse.value
+      };
+      fetch('http://127.0.0.1:5000/inscription', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+      .then(res => res.json())
+      .then(json => document.getElementById('resultInscription').innerText = json.message)
+      .catch(err => console.error(err));
+    });
+
+    document.getElementById('formConnexion').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const data = {
+        email: this.email.value,
+        motdepasse: this.motdepasse.value
+      };
+      fetch('http://127.0.0.1:5000/connexion', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+      .then(res => res.json().then(json => ({ status: res.status, json })))
+      .then(({ status, json }) => {
+        const msg = status === 200 ? json.message : "Erreur : " + json.message;
+        document.getElementById('resultConnexion').innerText = msg;
+      })
+      .catch(err => console.error(err));
+    });
+  </script>
+</body>
+</html>

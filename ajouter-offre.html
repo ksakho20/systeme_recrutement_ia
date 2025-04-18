@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Publier une Offre - Recrutement IA</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <h1 class="logo">Recrutement IA</h1>
+      <nav class="navigation">
+        <a href="index.html" class="btn">Accueil</a>
+        <a href="recruteur.html" class="btn secondaire">Espace Recruteur</a>
+        <!-- Lien deconnexion injecté dynamiquement si connecté -->
+      </nav>
+    </div>
+  </header>
+
+  <main class="container formulaire-section">
+    <h2>Publier une nouvelle offre</h2>
+    <form id="formOffre" class="form-style">
+      <input type="text" name="intitule" placeholder="Intitulé du poste" required>
+      <textarea name="description" placeholder="Description de l'offre" required></textarea>
+      <input type="text" name="competences" placeholder="Compétences requises (séparées par des virgules)" required>
+      <button type="submit" class="btn">Publier</button>
+    </form>
+    <div id="message"></div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 Plateforme IA Recrutement — Tous droits réservés</p>
+    </div>
+  </footer>
+
+  <script>
+    // Affichage dynamique du lien deconnexion si connecté
+    const nav = document.querySelector('.navigation');
+    if (localStorage.getItem("estConnecte") === "true") {
+      const lienDeconnexion = document.createElement('a');
+      lienDeconnexion.href = "deconnexion.html";
+      lienDeconnexion.className = "btn secondaire";
+      lienDeconnexion.textContent = "Déconnexion";
+      nav.appendChild(lienDeconnexion);
+    }
+
+    // Gestion du formulaire
+    document.getElementById('formOffre').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const message = document.getElementById('message');
+      message.textContent = "Offre publiée avec succès !";
+      message.style.color = "green";
+      this.reset();
+    });
+  </script>
+</body>
+</html>

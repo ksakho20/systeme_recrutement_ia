@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connexion - Recrutement IA</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <h1 class="logo">Recrutement IA</h1>
+      <nav class="navigation">
+        <a href="index.html" class="btn">Accueil</a>
+        <a href="inscription.html" class="btn secondaire">Inscription</a>
+        <a href="connexion.html" class="btn secondaire">Connexion</a>
+        <!-- Lien deconnexion injecté dynamiquement si connecté -->
+      </nav>
+    </div>
+  </header>
+
+  <main class="container formulaire-section">
+    <h2>Connexion</h2>
+    <form id="formConnexion" class="form-style">
+      <input type="email" name="email" placeholder="Email" required>
+      <input type="password" name="motdepasse" placeholder="Mot de passe" required>
+      <button type="submit" class="btn">Se connecter</button>
+    </form>
+    <div id="message"></div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 Plateforme IA Recrutement — Tous droits réservés</p>
+    </div>
+  </footer>
+
+  <script>
+    // Ajout dynamique du lien déconnexion si connecté
+    const nav = document.querySelector('.navigation');
+    if (localStorage.getItem("estConnecte") === "true") {
+      const lienDeconnexion = document.createElement('a');
+      lienDeconnexion.href = "deconnexion.html";
+      lienDeconnexion.className = "btn secondaire";
+      lienDeconnexion.textContent = "Déconnexion";
+      nav.appendChild(lienDeconnexion);
+    }
+
+    // Simule une connexion
+    document.getElementById('formConnexion').addEventListener('submit', function (e) {
+      e.preventDefault();
+      localStorage.setItem("estConnecte", "true");
+      const message = document.getElementById('message');
+      message.textContent = "Connexion réussie ! Redirection en cours...";
+      message.style.color = "green";
+      setTimeout(() => {
+        window.location.href = "index.html";
+      }, 1500);
+    });
+  </script>
+</body>
+</html>

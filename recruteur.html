@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Espace Recruteur - Recrutement IA</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <h1 class="logo">Recrutement IA</h1>
+      <nav class="navigation">
+        <a href="index.html" class="btn">Accueil</a>
+        <a href="inscription.html" class="btn secondaire">Inscription</a>
+        <a href="connexion.html" class="btn secondaire">Connexion</a>
+        <!-- Lien deconnexion injecté dynamiquement si connecté -->
+      </nav>
+    </div>
+  </header>
+
+  <main class="container formulaire-section">
+    <h2>Bienvenue, Recruteur</h2>
+    <p>Accédez aux candidatures analysées par notre IA et gérez votre processus de recrutement efficacement.</p>
+
+    <div class="boutons">
+      <a href="liste-candidats.html" class="btn">Voir les candidatures</a>
+      <a href="ajouter-offre.html" class="btn secondaire">Publier une offre</a>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 Plateforme IA Recrutement — Tous droits réservés</p>
+    </div>
+  </footer>
+
+  <script>
+    // Ajout dynamique du lien déconnexion si connecté
+    const nav = document.querySelector('.navigation');
+    if (localStorage.getItem("estConnecte") === "true") {
+      const lienDeconnexion = document.createElement('a');
+      lienDeconnexion.href = "deconnexion.html";
+      lienDeconnexion.className = "btn secondaire";
+      lienDeconnexion.textContent = "Déconnexion";
+      nav.appendChild(lienDeconnexion);
+    }
+  </script>
+</body>
+</html>
