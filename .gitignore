@@ -1,0 +1,39 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg
+*.egg-info/
+dist/
+build/
+.env
+.venv/
+env/
+venv/
+*.sqlite3
+
+# --- Node/npm (au cas où un jour) ---
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# --- VSCode / IDE ---
+.vscode/
+*.swp
+*.swo
+.idea/
+
+# --- OS / fichiers temporaires ---
+.DS_Store
+Thumbs.db
+
+# --- Logs ---
+*.log
+
+# --- JSON privés éventuels ---
+*.secret.json
+*.env.json
+
+# --- HTML temporaire (tests locaux) ---
+test_*.html
+
