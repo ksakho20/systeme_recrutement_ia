@@ -15,7 +15,7 @@ L’IA intégrée facilite la sélection des meilleurs profils en analysant les 
 
 ## 👥 Membres du projet
 
-- **SAKHO Kaba** – Développement complet du site (frontend + backend + IA)
+- SAKHO Kaba – (frontend + backend + IA)
 - DIABIRA Issa
 - BITARI Hajar
 - SOW Malado
